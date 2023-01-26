@@ -5,7 +5,7 @@ app.use(express.json());
 
 const PORT = 8191;
 
-const stateCapitals: Record<string, string> = {
+const stateCapitals: StateCapitalPairs = {
   Arkansas: 'Little Rock',
   Texas: 'Austin',
   Idaho: 'Salem',
