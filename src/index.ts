@@ -1,46 +1,23 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
+import StateController from './controllers/StateControllers';
 
 const app: Express = express();
 app.use(express.json());
 
 const PORT = 8191;
 
-const stateCapitals: StateCapitalPairs = {
-  Arkansas: 'Little Rock',
-  Texas: 'Austin',
-  Idaho: 'Salem',
-};
+//function handleListenEvent(): void {
+//  console.log(`Listening on port http://127.0.0.1:${PORT}`);
+//}
 
-function handleListenEvent(): void {
-  console.log(`Listening on port http://127.0.0.1:${PORT}`);
-}
+app.get('/capital', StatesController.getCapital);
+app.post('/capital', StatesController.addCapital);
 
-function getCapital(req: Request, res: Response): void {
-  if (req.query.state) {
-    const { state } = req.query as CapitalRequestQuery;
-    if (state in stateCapitals) {
-      const stateCapital = stateCapitals[state];
-      const stateData = {
-        state,
-        capital: stateCapital,
-      };
-      console.log(`User requested data for ${state}`);
-      res.json(stateData);
-    } else {
-      console.log(`User requested data for ${state} but it is not in our dataset`);
-      res.sendStatus(400);
-    }
-  } else {
-    console.log('User is requesting all state data');
-    res.json(stateCapitals);
-  }
-}
+// app.listen(PORT, handleListenEvent);
+app.listen(PORT, () => console.log('Listening on port http://127.0.0.1:${PORT}`));
 
-function addCapital(req: Request, res: Response): void {
-  res.sendStatus(501); // 501 Not Implemented
-}
+//() => console.log('Listening on port http://127.0.0.1:${PORT}`));
 
-app.get('/capital', getCapital);
-app.post('/capital', addCapital);
-
-app.listen(PORT, handleListenEvent);
+//function handleListenEvent() {
+//  console.log(`Listening on port http://127.0.0.1:${PORT}`);
+//}
